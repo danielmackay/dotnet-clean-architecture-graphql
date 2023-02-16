@@ -33,8 +33,4 @@
         <PackageReference Include="Respawn" Version="4.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\WebUI\WebUI.csproj" />
-    </ItemGroup>
-
 </Project>
