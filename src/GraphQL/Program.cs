@@ -1,4 +1,7 @@
+using CA.GraphQL.Domain.Common;
+using CA.GraphQL.Domain.Entities;
 using CA.GraphQL.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +10,22 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddGraphQLServices();
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .RegisterDbContext<ApplicationDbContext>()
+    .AddQueryType<Query>()
+    .AddType<TodoItemType>()
+    .AddType<TodoListType>()  
+    //.AddType<BaseEntityType>()
+    //.AddType<TodoItem>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting()
+    //.SetPagingOptions(new PagingOptions()
+    //{
+    //    MaxPageSize = 50,
+    //    DefaultPageSize = 20,
+    //    IncludeTotalCount = true
+    //})
+    ;
 
 var app = builder.Build();
 
@@ -41,26 +59,11 @@ app.Run();
 
 public class Query
 {
-    public Book GetBook() =>
-        new Book
-        {
-            Title = "C# in depth.",
-            Author = new Author
-            {
-                Name = "Jon Skeet"
-            }
-        };
+    [UseProjection]
+    //[UseFiltering]
+    //[UseSorting]
+    public IQueryable<TodoItem> GetTodoItems([Service] ApplicationDbContext dbContext) => dbContext.TodoItems.AsNoTracking();
+
+    [UseProjection]
+    public IQueryable<TodoList> GetTodoLists([Service] ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
 }
-
-public class Book
-{
-    public string Title { get; set; }
-
-    public Author Author { get; set; }
-}
-
-public class Author
-{
-    public string Name { get; set; }
-}
-
