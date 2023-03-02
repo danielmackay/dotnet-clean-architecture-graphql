@@ -32,9 +32,7 @@ public class UpdateTodoItemDetailCommandHandler : IRequestHandler<UpdateTodoItem
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
-        {
             throw new NotFoundException(nameof(TodoItem), request.Id);
-        }
 
         entity.ListId = request.ListId;
         entity.Priority = request.Priority;

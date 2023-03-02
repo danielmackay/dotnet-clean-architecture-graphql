@@ -4,7 +4,6 @@ using CA.GraphQL.Infrastructure.Identity;
 using CA.GraphQL.Infrastructure.Persistence;
 using CA.GraphQL.Infrastructure.Persistence.Interceptors;
 using CA.GraphQL.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

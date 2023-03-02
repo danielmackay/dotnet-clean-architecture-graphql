@@ -1,7 +1,4 @@
-using CA.GraphQL.Domain.Common;
-using CA.GraphQL.Domain.Entities;
 using CA.GraphQL.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +10,7 @@ builder.Services
     .RegisterDbContext<ApplicationDbContext>()
     .AddQueryType<Query>()
     .AddType<TodoItemType>()
-    .AddType<TodoListType>()  
+    .AddType<TodoListType>()
     //.AddType<BaseEntityType>()
     //.AddType<TodoItem>()
     .AddProjections()
@@ -35,12 +32,10 @@ if (app.Environment.IsDevelopment())
     app.UseMigrationsEndPoint();
 
     // Initialise and seed database
-    using (var scope = app.Services.CreateScope())
-    {
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-        await initialiser.InitialiseAsync();
-        await initialiser.SeedAsync();
-    }
+    using var scope = app.Services.CreateScope();
+    var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+    await initialiser.InitialiseAsync();
+    await initialiser.SeedAsync();
 }
 else
 {
@@ -56,14 +51,3 @@ app.UseRouting();
 app.MapGraphQL();
 
 app.Run();
-
-public class Query
-{
-    [UseProjection]
-    //[UseFiltering]
-    //[UseSorting]
-    public IQueryable<TodoItem> GetTodoItems([Service] ApplicationDbContext dbContext) => dbContext.TodoItems.AsNoTracking();
-
-    [UseProjection]
-    public IQueryable<TodoList> GetTodoLists([Service] ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
-}

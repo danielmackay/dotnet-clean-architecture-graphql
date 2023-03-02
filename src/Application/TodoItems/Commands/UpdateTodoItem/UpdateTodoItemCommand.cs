@@ -29,9 +29,7 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
-        {
             throw new NotFoundException(nameof(TodoItem), request.Id);
-        }
 
         entity.Title = request.Title;
         entity.Done = request.Done;

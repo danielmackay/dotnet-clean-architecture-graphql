@@ -23,9 +23,7 @@ public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemComman
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
-        {
             throw new NotFoundException(nameof(TodoItem), request.Id);
-        }
 
         _context.TodoItems.Remove(entity);
 

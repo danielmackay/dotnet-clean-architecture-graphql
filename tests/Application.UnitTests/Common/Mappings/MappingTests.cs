@@ -15,7 +15,7 @@ public class MappingTests
 
     public MappingTests()
     {
-        _configuration = new MapperConfiguration(config => 
+        _configuration = new MapperConfiguration(config =>
             config.AddProfile<MappingProfile>());
 
         _mapper = _configuration.CreateMapper();
