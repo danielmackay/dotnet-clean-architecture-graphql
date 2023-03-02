@@ -22,7 +22,7 @@ builder.Services
     .AddFiltering()
     .AddSorting()
     .AddErrorFilter<ValidationFilter>()
-//.AddMutationConventions()
+    //.AddMutationConventions()
 //.SetPagingOptions(new PagingOptions()
 //{
 //    MaxPageSize = 50,

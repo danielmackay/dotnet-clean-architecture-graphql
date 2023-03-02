@@ -4,12 +4,12 @@ using MediatR;
 
 namespace CA.GraphQL.Application.TodoLists.Commands.CreateTodoList;
 
-public record CreateTodoListCommand : IRequest<int>
+public record CreateTodoListCommand : IRequest<CreateTodoListPayload>
 {
     public string? Title { get; init; }
 }
 
-public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
+public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, CreateTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -18,7 +18,7 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
         _context = context;
     }
 
-    public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+    public async Task<CreateTodoListPayload> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
     {
         var entity = new TodoList();
 
@@ -28,6 +28,8 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return new CreateTodoListPayload(entity);
     }
 }
+
+public record CreateTodoListPayload(TodoList TodoList);

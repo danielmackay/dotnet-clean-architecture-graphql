@@ -6,9 +6,9 @@ namespace CA.GraphQL.Application.TodoLists.Commands.PurgeTodoLists;
 
 [Authorize(Roles = "Administrator")]
 [Authorize(Policy = "CanPurge")]
-public record PurgeTodoListsCommand : IRequest;
+public record PurgeTodoListsCommand : IRequest<PurgeTodoListsPayload>;
 
-public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsCommand>
+public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsCommand, PurgeTodoListsPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -17,12 +17,14 @@ public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(PurgeTodoListsCommand request, CancellationToken cancellationToken)
+    public async Task<PurgeTodoListsPayload> Handle(PurgeTodoListsCommand request, CancellationToken cancellationToken)
     {
         _context.TodoLists.RemoveRange(_context.TodoLists);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new PurgeTodoListsPayload();
     }
 }
+
+public record PurgeTodoListsPayload();

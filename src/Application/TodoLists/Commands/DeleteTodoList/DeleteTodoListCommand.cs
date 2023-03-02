@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CA.GraphQL.Application.TodoLists.Commands.DeleteTodoList;
 
-public record DeleteTodoListCommand(int Id) : IRequest;
+public record DeleteTodoListCommand(int Id) : IRequest<DeleteTodoListPayload>;
 
-public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
+public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand, DeleteTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -17,7 +17,7 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteTodoListPayload> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoLists
             .Where(l => l.Id == request.Id)
@@ -30,6 +30,8 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new DeleteTodoListPayload(entity);
     }
 }
+
+public record DeleteTodoListPayload(TodoList TodoList);

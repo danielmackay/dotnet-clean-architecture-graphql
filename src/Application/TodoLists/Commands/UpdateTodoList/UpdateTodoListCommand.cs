@@ -5,14 +5,14 @@ using MediatR;
 
 namespace CA.GraphQL.Application.TodoLists.Commands.UpdateTodoList;
 
-public record UpdateTodoListCommand : IRequest
+public record UpdateTodoListCommand : IRequest<UpdateTodoListPayload>
 {
     public int Id { get; init; }
 
     public string? Title { get; init; }
 }
 
-public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
+public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand, UpdateTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -21,7 +21,7 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateTodoListPayload> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoLists
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -33,6 +33,8 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new UpdateTodoListPayload(entity);
     }
 }
+
+public record UpdateTodoListPayload(TodoList TodoList);
