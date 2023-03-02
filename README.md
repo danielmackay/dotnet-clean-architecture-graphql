@@ -9,8 +9,3 @@ This project is an example implementation of Clean Architecture principles using
 ### Create ObjectTypes via Code-First patterns
 
 Use Hot Chocolate 'Code-First' patterns to provide a wrapper around the domain objects and avoid exposing DB objects directly to the consumer.  The alternative would be to use 'Annotation-based' patterns, but that would involve decorating our domain objects with GraphQL-related attributes.
-
-## Todo
-
-- [ ] Build GraphQL Server
-- [ ] Implement Blazor FE with Strawberry Shake
