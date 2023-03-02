@@ -1,4 +1,6 @@
 using CA.GraphQL.Infrastructure.Persistence;
+using GraphQL.Filters;
+using GraphQL.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +9,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddGraphQLServices();
 builder.Services
     .AddGraphQLServer()
+    //.AddFairyBread()
     .RegisterDbContext<ApplicationDbContext>()
     .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    //.AddType<MutationType>()
     .AddType<TodoItemType>()
     .AddType<TodoListType>()
     //.AddType<BaseEntityType>()
@@ -16,13 +21,15 @@ builder.Services
     .AddProjections()
     .AddFiltering()
     .AddSorting()
-    //.SetPagingOptions(new PagingOptions()
-    //{
-    //    MaxPageSize = 50,
-    //    DefaultPageSize = 20,
-    //    IncludeTotalCount = true
-    //})
-    ;
+    .AddErrorFilter<ValidationFilter>()
+//.AddMutationConventions()
+//.SetPagingOptions(new PagingOptions()
+//{
+//    MaxPageSize = 50,
+//    DefaultPageSize = 20,
+//    IncludeTotalCount = true
+//})
+;
 
 var app = builder.Build();
 
