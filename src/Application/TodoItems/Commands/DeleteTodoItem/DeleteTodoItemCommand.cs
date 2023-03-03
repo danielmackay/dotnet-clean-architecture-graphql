@@ -6,9 +6,11 @@ using MediatR;
 
 namespace CA.GraphQL.Application.TodoItems.Commands.DeleteTodoItem;
 
-public record DeleteTodoItemCommand(int Id) : IRequest;
+public record DeleteTodoItemCommand(int Id) : IRequest<DeleteTodoItemPayload>;
 
-public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand>
+public record DeleteTodoItemPayload(TodoItem TodoItem);
+
+public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, DeleteTodoItemPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -17,7 +19,7 @@ public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteTodoItemPayload> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoItems
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -31,6 +33,6 @@ public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new DeleteTodoItemPayload(entity);
     }
 }

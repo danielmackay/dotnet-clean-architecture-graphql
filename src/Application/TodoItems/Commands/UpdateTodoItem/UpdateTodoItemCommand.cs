@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CA.GraphQL.Application.TodoItems.Commands.UpdateTodoItem;
 
-public record UpdateTodoItemCommand : IRequest
+public record UpdateTodoItemCommand : IRequest<UpdateTodoItemPayload>
 {
     public int Id { get; init; }
 
@@ -14,7 +14,9 @@ public record UpdateTodoItemCommand : IRequest
     public bool Done { get; init; }
 }
 
-public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
+public record UpdateTodoItemPayload(TodoItem TodoItem);
+
+public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, UpdateTodoItemPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -23,7 +25,7 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateTodoItemPayload> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoItems
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -36,6 +38,6 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new UpdateTodoItemPayload(entity);
     }
 }

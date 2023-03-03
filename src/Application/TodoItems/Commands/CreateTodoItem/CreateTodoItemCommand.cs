@@ -5,14 +5,16 @@ using MediatR;
 
 namespace CA.GraphQL.Application.TodoItems.Commands.CreateTodoItem;
 
-public record CreateTodoItemCommand : IRequest<int>
+public record CreateTodoItemCommand : IRequest<CreateTodoItemPayload>
 {
     public int ListId { get; init; }
 
     public string? Title { get; init; }
 }
 
-public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
+public record CreateTodoItemPayload(TodoItem TodoItem);
+
+public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, CreateTodoItemPayload>
 {
     private readonly IApplicationDbContext _context;
 
@@ -21,7 +23,7 @@ public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemComman
         _context = context;
     }
 
-    public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+    public async Task<CreateTodoItemPayload> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
     {
         var entity = new TodoItem
         {
@@ -36,6 +38,6 @@ public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return new CreateTodoItemPayload(entity);
     }
 }
