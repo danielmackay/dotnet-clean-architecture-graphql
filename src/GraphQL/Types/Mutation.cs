@@ -12,7 +12,7 @@ public class Mutation
 
     public async Task<DeleteTodoListPayload> DeleteTodoList(DeleteTodoListCommand input, [Service] ISender sender) => await sender.Send(input);
 
-    public async Task<PurgeTodoListsPayload> PurgeTodoList(PurgeTodoListsCommand input, [Service] ISender sender) => await sender.Send(input);
+    public async Task<PurgeTodoListsPayload> PurgeTodoList([Service] ISender sender) => await sender.Send(new PurgeTodoListsCommand());
 
     public async Task<UpdateTodoListPayload> UpdateTodoList(UpdateTodoListCommand input, [Service] ISender sender) => await sender.Send(input);
 }

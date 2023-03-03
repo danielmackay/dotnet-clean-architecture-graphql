@@ -23,8 +23,8 @@ public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new PurgeTodoListsPayload();
+        return new PurgeTodoListsPayload(true);
     }
 }
 
-public record PurgeTodoListsPayload();
+public record PurgeTodoListsPayload(bool Success);
