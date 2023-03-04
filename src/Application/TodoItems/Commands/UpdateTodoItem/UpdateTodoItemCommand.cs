@@ -30,8 +30,10 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
         var entity = await _context.TodoItems
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
+#pragma warning disable IDE0270 // Use coalesce expression
         if (entity == null)
             throw new NotFoundException(nameof(TodoItem), request.Id);
+#pragma warning restore IDE0270 // Use coalesce expression
 
         entity.Title = request.Title;
         entity.Done = request.Done;

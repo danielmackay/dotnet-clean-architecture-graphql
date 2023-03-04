@@ -1,0 +1,5 @@
+mutation PurgeTodoItems($listId: Int!){
+  purgeTodoItems(input: {listId: $listId}) {
+    removed
+  }
+}

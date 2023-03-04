@@ -1,12 +1,10 @@
-﻿@*@using BlazorUI.Services;
-
-@implements IDisposable
-@inject AppState AppState
-
-<MudButton Variant="Variant.Filled" FullWidth="false" Color="Color.Error" Class="mt-10" OnClick="AppState.RemoveAllTodos">Clear</MudButton>
+﻿@inject PurgeTodoItemsMutation PurgeTodoItems;
 
 @code {
-    protected override void OnInitialized() => AppState.OnChange += StateHasChanged;
+    private async void Clear()
+    {
+        await PurgeTodoItems.ExecuteAsync(1);
+    }
+}
 
-    public void Dispose() => AppState.OnChange -= StateHasChanged;
-}*@
+<MudButton Variant="Variant.Filled" FullWidth="false" Color="Color.Error" Class="mt-10" OnClick="Clear">Clear</MudButton>

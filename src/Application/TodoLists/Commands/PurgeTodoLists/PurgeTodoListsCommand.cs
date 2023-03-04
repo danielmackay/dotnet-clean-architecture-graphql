@@ -8,6 +8,8 @@ namespace CA.GraphQL.Application.TodoLists.Commands.PurgeTodoLists;
 [Authorize(Policy = "CanPurge")]
 public record PurgeTodoListsCommand : IRequest<PurgeTodoListsPayload>;
 
+public record PurgeTodoListsPayload(bool Success);
+
 public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsCommand, PurgeTodoListsPayload>
 {
     private readonly IApplicationDbContext _context;
@@ -27,4 +29,3 @@ public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsComman
     }
 }
 
-public record PurgeTodoListsPayload(bool Success);

@@ -23,13 +23,13 @@ builder.Services
     .AddFiltering()
     .AddSorting()
     .AddErrorFilter<ValidationFilter>()
-    //.AddMutationConventions()
-    //.SetPagingOptions(new PagingOptions()
-    //{
-    //    MaxPageSize = 50,
-    //    DefaultPageSize = 20,
-    //    IncludeTotalCount = true
-    //})
+//.AddMutationConventions()
+//.SetPagingOptions(new PagingOptions()
+//{
+//    MaxPageSize = 50,
+//    DefaultPageSize = 20,
+//    IncludeTotalCount = true
+//})
 ;
 
 var app = builder.Build();
