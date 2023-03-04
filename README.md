@@ -17,6 +17,14 @@ This project is an example implementation of Clean Architecture principles using
   - Delete
   - Fluent Validation
 
+## Frontend
+
+### Updating the GraphQL Schema
+
+```ps1
+dotnet graphql download https://localhost:44339/graphql/
+```
+
 ## Key Design Decisions
 
 ### Create ObjectTypes via Code-First patterns

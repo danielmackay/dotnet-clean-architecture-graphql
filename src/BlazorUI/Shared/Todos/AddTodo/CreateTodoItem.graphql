@@ -1,0 +1,7 @@
+mutation CreateTodoItem($title: String!, $listId: Int!){
+  createTodoItem (input: {title: $title, listId: $listId}){
+    todoItem {
+      id
+    }
+  }
+}

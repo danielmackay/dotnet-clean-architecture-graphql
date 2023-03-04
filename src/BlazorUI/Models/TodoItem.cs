@@ -1,5 +1,6 @@
 ﻿namespace BlazorUI.Models;
 
+// TODO: Remove this
 public class TodoItem
 {
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -15,6 +16,7 @@ public class TodoItem
     public DateTime? DueDate { get; set; }
 }
 
+// TODO: Remove this
 public enum Priority
 {
     None = 0,

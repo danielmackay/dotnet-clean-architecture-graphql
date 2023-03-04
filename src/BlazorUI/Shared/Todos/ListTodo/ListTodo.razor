@@ -1,0 +1,66 @@
+﻿@using BlazorUI.GraphQL.State;
+@using BlazorUI.Models;
+
+@inject NavigationManager NavManager;
+@inject TodoClientStoreAccessor StoreAccessor;
+@inject CompleteTodoItemMutation CompleteTodoItem;
+@inject DeleteTodoItemMutation DeleteTodoItem;
+
+@code {
+    private async void ToggleCompletion(IGetTodoItems_TodoItems_Items todoItem)
+    {
+        var done = !todoItem.Done;
+
+        // Immediately update the store for a better user experience
+        StoreAccessor.EntityStore.Update(session =>
+        {
+            var entityId = new EntityId("TodoItem", todoItem.Id);
+            var entity = session.CurrentSnapshot.GetEntity<TodoItemEntity>(entityId);
+            if (entity is not null)
+            {
+                // TODO: Try to get this to work with record types
+                var newEntity = new TodoItemEntity(todoItem.Id, todoItem.Title, done);
+                session.SetEntity(entityId, newEntity);
+            }
+        });
+
+        await CompleteTodoItem.ExecuteAsync(todoItem.Id, done);
+    }
+
+    private void OnTitleClick(IGetTodoItems_TodoItems_Items todoItem)
+    {
+        NavManager.NavigateTo($"/todos/{todoItem.Id}");
+    }
+
+    private async void Delete(IGetTodoItems_TodoItems_Items todoItem)
+    {
+        await DeleteTodoItem.ExecuteAsync(todoItem.Id);
+    }
+}
+
+<UseGetTodoItems Context="result">
+    <ChildContent>
+        @if (result.TodoItems?.Items?.Count is null or 0)
+        {
+            <MudText Typo="Typo.body1">No Todos</MudText>
+        }
+        else
+        {
+            foreach (var todo in result.TodoItems.Items)
+            {
+                <MudPaper @key="@todo.Id" Class="d-flex flex-grow-1 gap-4 mt-1 pa-1">
+                    <MudCheckBox T="bool" Checked="todo.Done" CheckedChanged="(e => ToggleCompletion(todo))" />
+                    <MudText Class="flex-grow-1 pt-3 title-hover" Style="@(todo.Done ? "text-decoration : line-through" : "")" Typo="Typo.body1" @onclick="(() => OnTitleClick(todo))">@todo.Title</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(e => Delete(todo))" />
+                </MudPaper>
+            }
+        }
+    </ChildContent>
+    <ErrorContent>
+        Something went wrong ...<br />
+        @result.First().Message
+    </ErrorContent>
+    <LoadingContent>
+        Loading ...
+    </LoadingContent>
+</UseGetTodoItems>

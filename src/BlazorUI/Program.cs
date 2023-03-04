@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorUI;
 using MudBlazor.Services;
-using BlazorUI.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -14,10 +13,7 @@ builder.Services
 
 builder.Services
     .AddTodoClient(strategy: StrawberryShake.ExecutionStrategy.CacheAndNetwork)
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7114/graphql/"));
-
-builder.Services.AddSingleton<StorageService>();
-builder.Services.AddSingleton<AppState>();
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:44339/graphql/"));
 
 builder.Services.AddMudServices();
 

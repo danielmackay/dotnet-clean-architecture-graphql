@@ -4,7 +4,7 @@ using CA.GraphQL.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraphQL.Types;
+namespace GraphQL.Queries;
 
 public class Query
 {

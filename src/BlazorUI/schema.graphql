@@ -45,6 +45,7 @@ type Mutation {
   deleteTodoItem(input: DeleteTodoItemCommandInput!): DeleteTodoItemPayload!
   updateTodoItem(input: UpdateTodoItemCommandInput!): UpdateTodoItemPayload!
   updateTodoItemDetail(input: UpdateTodoItemDetailCommandInput!): UpdateTodoItemDetailPayload!
+  completeTodoItem(input: CompleteTodoItemCommandInput!): CompleteTodoItemPayload!
 }
 
 enum PriorityLevel {
@@ -332,4 +333,13 @@ input UpdateTodoItemDetailCommandInput {
   listId: Int!
   priority: PriorityLevel!
   note: String
+}
+
+type CompleteTodoItemPayload {
+  todoItem: TodoItem!
+}
+
+input CompleteTodoItemCommandInput {
+  id: Int!
+  done: Boolean!
 }

@@ -1,4 +1,4 @@
-﻿@using BlazorUI.Services;
+﻿@*@using BlazorUI.Services;
 
 @implements IDisposable
 @inject AppState AppState
@@ -9,4 +9,4 @@
     protected override void OnInitialized() => AppState.OnChange += StateHasChanged;
 
     public void Dispose() => AppState.OnChange -= StateHasChanged;
-}
+}*@

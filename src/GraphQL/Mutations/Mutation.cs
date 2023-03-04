@@ -1,4 +1,5 @@
-﻿using CA.GraphQL.Application.TodoItems.Commands.CreateTodoItem;
+﻿using CA.GraphQL.Application.TodoItems.Commands.CompleteTodoItem;
+using CA.GraphQL.Application.TodoItems.Commands.CreateTodoItem;
 using CA.GraphQL.Application.TodoItems.Commands.DeleteTodoItem;
 using CA.GraphQL.Application.TodoItems.Commands.UpdateTodoItem;
 using CA.GraphQL.Application.TodoItems.Commands.UpdateTodoItemDetail;
@@ -8,7 +9,7 @@ using CA.GraphQL.Application.TodoLists.Commands.PurgeTodoLists;
 using CA.GraphQL.Application.TodoLists.Commands.UpdateTodoList;
 using MediatR;
 
-namespace GraphQL.Types;
+namespace GraphQL.Mutations;
 
 public class Mutation
 {
@@ -27,4 +28,6 @@ public class Mutation
     public async Task<UpdateTodoItemPayload> UpdateTodoItem(UpdateTodoItemCommand input, [Service] ISender sender) => await sender.Send(input);
 
     public async Task<UpdateTodoItemDetailPayload> UpdateTodoItemDetail(UpdateTodoItemDetailCommand input, [Service] ISender sender) => await sender.Send(input);
+
+    public async Task<CompleteTodoItemPayload> CompleteTodoItem(CompleteTodoItemCommand input, [Service] ISender sender) => await sender.Send(input);
 }

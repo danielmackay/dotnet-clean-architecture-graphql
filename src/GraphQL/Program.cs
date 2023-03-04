@@ -1,6 +1,7 @@
 using CA.GraphQL.Infrastructure.Persistence;
 using GraphQL.Filters;
-using GraphQL.Types;
+using GraphQL.Mutations;
+using GraphQL.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
