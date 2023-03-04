@@ -14,6 +14,9 @@ public class Query
     [UseSorting]
     public IQueryable<TodoItem> GetTodoItems([Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.AsNoTracking();
 
+    [UseSingleOrDefault]
+    public IQueryable<TodoItem> GetTodoItem(int id, [Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.Where(ti => ti.Id == id);
+
     [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]

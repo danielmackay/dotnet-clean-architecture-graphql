@@ -19,7 +19,7 @@
             if (entity is not null)
             {
                 // TODO: Try to get this to work with record types
-                var newEntity = new TodoItemEntity(todoItem.Id, todoItem.Title, done);
+                var newEntity = new TodoItemEntity(todoItem.Id, 1, todoItem.Title, null, PriorityLevel.None, done);
                 session.SetEntity(entityId, newEntity);
             }
         });

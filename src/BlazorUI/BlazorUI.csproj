@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="GetTodoItems.graphql" />
+    <None Remove="Pages\Todos\Details\GetTodoItem.graphql" />
     <None Remove="Shared\Todos\AddTodo\CreateTodoItem.graphql" />
     <None Remove="Shared\Todos\ClearTodo\PurgeTodoItems.graphql" />
     <None Remove="Shared\Todos\CompleteTodoItem.graphql" />
