@@ -1,0 +1,12 @@
+﻿@using BlazorUI.Services;
+
+@implements IDisposable
+@inject AppState AppState
+
+<MudButton Variant="Variant.Filled" FullWidth="false" Color="Color.Error" Class="mt-10" OnClick="AppState.RemoveAllTodos">Clear</MudButton>
+
+@code {
+    protected override void OnInitialized() => AppState.OnChange += StateHasChanged;
+
+    public void Dispose() => AppState.OnChange -= StateHasChanged;
+}

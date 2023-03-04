@@ -1,0 +1,81 @@
+﻿@page "/todos/{Id:guid}"
+@using BlazorUI.Models;
+@using BlazorUI.Services;
+
+@inject AppState AppState
+@inject ISnackbar Snackbar
+
+<MudLink Href="/todos">Back</MudLink>
+
+<MudText Typo="Typo.h2">Todo Details</MudText>
+
+@if (Todo is null)
+{
+    <p>Todo not found</p>
+}
+else
+{
+    <MudPaper Class="pa-4">
+        <MudCheckBox T="bool" Class="pa-0" Checked="@IsComplete" Label="Complete" CheckedChanged="@(() => IsComplete = !IsComplete)" />
+        <MudTextField Class="mt-2" @bind-Value="Title" Label="Title" Variant="Variant.Outlined" />
+        <MudTextField Class="mt-4" Label="Notes" T="string" @bind-Text="Notes" Lines="5" Variant="Variant.Outlined" />
+        <MudDatePicker Class="mt-2" Label="Due Date" Variant="Variant.Outlined" @bind-Date="DueDate" />
+        <MudChipSet Class="mt-2" @bind-SelectedValues="SelectedValues" Filter="true">
+            <MudChip Text="Low" Value="Models.Priority.Low" Color="Color.Success">Low</MudChip>
+            <MudChip Text="Medium" Value="Models.Priority.Medium" Color="Color.Warning">Medium</MudChip>
+            <MudChip Text="High" Value="Models.Priority.High" Color="Color.Error">High</MudChip>
+        </MudChipSet>
+    </MudPaper>
+
+    <div class="mt-4"></div>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Save">Save</MudButton>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public TodoItem? Todo { get; set; }
+
+    public bool IsComplete { get; set; }
+
+    public string? Title { get; set; }
+
+    public string? Notes { get; set; }
+
+    public DateTime? DueDate { get; set; }
+
+    public ICollection<object> SelectedValues { get; set; } = new List<object>();
+
+    private void Save()
+    {
+        if (Todo is null)
+            return;
+
+        Todo.IsComplete = IsComplete;
+        Todo.Title = Title ?? "";
+        Todo.Notes = Notes;
+        Todo.DueDate = DueDate;
+        Todo.Priority = (Priority)SelectedValues.First();
+
+        AppState?.Sync();
+        Snackbar.Add("Todo saved", Severity.Success);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var todos = await AppState.GetTodos();
+        Todo = todos.SingleOrDefault(t => t.Id == Id);
+        if (Todo != null)
+        {
+            IsComplete = Todo.IsComplete;
+            Title = Todo.Title;
+            Notes = Todo.Notes;
+            DueDate = Todo.DueDate;
+            SelectedValues.Add(Todo.Priority);
+        }
+
+        await base.OnInitializedAsync();
+    }
+}
