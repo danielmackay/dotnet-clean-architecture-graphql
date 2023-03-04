@@ -50,11 +50,17 @@ else
     app.UseHsts();
 }
 
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
 app.MapGraphQL();
+
 
 app.Run();

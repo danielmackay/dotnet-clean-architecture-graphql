@@ -1,0 +1,8 @@
+query GetTodoLists {
+  todoLists {
+    items {
+      id
+      title
+    }
+  }
+}
