@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL", "src\GraphQL\GraphQL.csproj", "{DB172490-079D-4CBC-8B74-DF587AE13396}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorUI", "src\BlazorUI\BlazorUI.csproj", "{27483008-2B44-499D-B8B3-F4DF36998195}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{DB172490-079D-4CBC-8B74-DF587AE13396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB172490-079D-4CBC-8B74-DF587AE13396}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB172490-079D-4CBC-8B74-DF587AE13396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27483008-2B44-499D-B8B3-F4DF36998195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27483008-2B44-499D-B8B3-F4DF36998195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27483008-2B44-499D-B8B3-F4DF36998195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27483008-2B44-499D-B8B3-F4DF36998195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{34C0FACD-F3D9-400C-8945-554DD6B0819A} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{117DA02F-5274-4565-ACC6-DA9B6E568B09} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{DB172490-079D-4CBC-8B74-DF587AE13396} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{27483008-2B44-499D-B8B3-F4DF36998195} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}

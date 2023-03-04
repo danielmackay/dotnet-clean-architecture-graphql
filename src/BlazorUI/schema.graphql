@@ -1,0 +1,335 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type TodoItem {
+  ssw: String
+  listId: Int!
+  title: String
+  note: String
+  priority: PriorityLevel!
+  reminder: DateTime
+  done: Boolean!
+  list: TodoList!
+  created: DateTime!
+  createdBy: String
+  lastModified: DateTime
+  lastModifiedBy: String
+  id: Int!
+}
+
+type TodoList {
+  title: String
+  colour: Colour!
+  items: [TodoItem!]!
+  created: DateTime!
+  createdBy: String
+  lastModified: DateTime
+  lastModifiedBy: String
+  id: Int!
+}
+
+type Query {
+  todoItems(skip: Int take: Int where: TodoItemFilterInput order: [TodoItemSortInput!]): TodoItemsCollectionSegment
+  todoLists(skip: Int take: Int where: TodoListFilterInput order: [TodoListSortInput!]): TodoListsCollectionSegment
+  weatherForecasts(skip: Int take: Int where: WeatherForecastFilterInput order: [WeatherForecastSortInput!]): WeatherForecastsCollectionSegment
+}
+
+type Mutation {
+  createTodoList(input: CreateTodoListCommandInput!): CreateTodoListPayload!
+  deleteTodoList(input: DeleteTodoListCommandInput!): DeleteTodoListPayload!
+  purgeTodoList: PurgeTodoListsPayload!
+  updateTodoList(input: UpdateTodoListCommandInput!): UpdateTodoListPayload!
+  createTodoItem(input: CreateTodoItemCommandInput!): CreateTodoItemPayload!
+  deleteTodoItem(input: DeleteTodoItemCommandInput!): DeleteTodoItemPayload!
+  updateTodoItem(input: UpdateTodoItemCommandInput!): UpdateTodoItemPayload!
+  updateTodoItemDetail(input: UpdateTodoItemDetailCommandInput!): UpdateTodoItemDetailPayload!
+}
+
+enum PriorityLevel {
+  NONE
+  LOW
+  MEDIUM
+  HIGH
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+type Colour {
+  code: String!
+}
+
+input TodoItemFilterInput {
+  and: [TodoItemFilterInput!]
+  or: [TodoItemFilterInput!]
+  listId: IntOperationFilterInput
+  title: StringOperationFilterInput
+  note: StringOperationFilterInput
+  priority: PriorityLevelOperationFilterInput
+  reminder: DateTimeOperationFilterInput
+  done: BooleanOperationFilterInput
+  list: TodoListFilterInput
+  created: DateTimeOperationFilterInput
+  createdBy: StringOperationFilterInput
+  lastModified: DateTimeOperationFilterInput
+  lastModifiedBy: StringOperationFilterInput
+  id: IntOperationFilterInput
+  domainEvents: ListFilterInputTypeOfBaseEventFilterInput
+}
+
+input TodoItemSortInput {
+  listId: SortEnumType
+  title: SortEnumType
+  note: SortEnumType
+  priority: SortEnumType
+  reminder: SortEnumType
+  done: SortEnumType
+  list: TodoListSortInput
+  created: SortEnumType
+  createdBy: SortEnumType
+  lastModified: SortEnumType
+  lastModifiedBy: SortEnumType
+  id: SortEnumType
+}
+
+input TodoListFilterInput {
+  and: [TodoListFilterInput!]
+  or: [TodoListFilterInput!]
+  title: StringOperationFilterInput
+  colour: ColourFilterInput
+  items: ListFilterInputTypeOfTodoItemFilterInput
+  created: DateTimeOperationFilterInput
+  createdBy: StringOperationFilterInput
+  lastModified: DateTimeOperationFilterInput
+  lastModifiedBy: StringOperationFilterInput
+  id: IntOperationFilterInput
+  domainEvents: ListFilterInputTypeOfBaseEventFilterInput
+}
+
+input TodoListSortInput {
+  title: SortEnumType
+  colour: ColourSortInput
+  created: SortEnumType
+  createdBy: SortEnumType
+  lastModified: SortEnumType
+  lastModifiedBy: SortEnumType
+  id: SortEnumType
+}
+
+input WeatherForecastFilterInput {
+  and: [WeatherForecastFilterInput!]
+  or: [WeatherForecastFilterInput!]
+  date: DateTimeOperationFilterInput
+  temperatureC: IntOperationFilterInput
+  temperatureF: IntOperationFilterInput
+  summary: StringOperationFilterInput
+}
+
+input WeatherForecastSortInput {
+  date: SortEnumType
+  temperatureC: SortEnumType
+  temperatureF: SortEnumType
+  summary: SortEnumType
+}
+
+"A segment of a collection."
+type TodoItemsCollectionSegment {
+  "Information to aid in pagination."
+  pageInfo: CollectionSegmentInfo!
+  "A flattened list of the items."
+  items: [TodoItem!]
+  totalCount: Int!
+}
+
+"A segment of a collection."
+type TodoListsCollectionSegment {
+  "Information to aid in pagination."
+  pageInfo: CollectionSegmentInfo!
+  "A flattened list of the items."
+  items: [TodoList!]
+  totalCount: Int!
+}
+
+"A segment of a collection."
+type WeatherForecastsCollectionSegment {
+  "Information to aid in pagination."
+  pageInfo: CollectionSegmentInfo!
+  "A flattened list of the items."
+  items: [WeatherForecast!]
+  totalCount: Int!
+}
+
+input IntOperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input PriorityLevelOperationFilterInput {
+  eq: PriorityLevel
+  neq: PriorityLevel
+  in: [PriorityLevel!]
+  nin: [PriorityLevel!]
+}
+
+input DateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+
+input ListFilterInputTypeOfBaseEventFilterInput {
+  all: BaseEventFilterInput
+  none: BaseEventFilterInput
+  some: BaseEventFilterInput
+  any: Boolean
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input ColourFilterInput {
+  and: [ColourFilterInput!]
+  or: [ColourFilterInput!]
+  code: StringOperationFilterInput
+}
+
+input ListFilterInputTypeOfTodoItemFilterInput {
+  all: TodoItemFilterInput
+  none: TodoItemFilterInput
+  some: TodoItemFilterInput
+  any: Boolean
+}
+
+input ColourSortInput {
+  code: SortEnumType
+}
+
+"Information about the offset pagination."
+type CollectionSegmentInfo {
+  "Indicates whether more items exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more items exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+}
+
+type WeatherForecast {
+  date: DateTime!
+  temperatureC: Int!
+  temperatureF: Int!
+  summary: String
+}
+
+input BaseEventFilterInput {
+  and: [BaseEventFilterInput!]
+  or: [BaseEventFilterInput!]
+}
+
+type UpdateTodoListPayload {
+  todoList: TodoList!
+}
+
+type PurgeTodoListsPayload {
+  success: Boolean!
+}
+
+input DeleteTodoListCommandInput {
+  id: Int!
+}
+
+type DeleteTodoListPayload {
+  todoList: TodoList!
+}
+
+input CreateTodoListCommandInput {
+  title: String
+}
+
+type CreateTodoListPayload {
+  todoList: TodoList!
+}
+
+input UpdateTodoListCommandInput {
+  id: Int!
+  title: String
+}
+
+type CreateTodoItemPayload {
+  todoItem: TodoItem!
+}
+
+input CreateTodoItemCommandInput {
+  listId: Int!
+  title: String
+}
+
+type DeleteTodoItemPayload {
+  todoItem: TodoItem!
+}
+
+input DeleteTodoItemCommandInput {
+  id: Int!
+}
+
+type UpdateTodoItemPayload {
+  todoItem: TodoItem!
+}
+
+input UpdateTodoItemCommandInput {
+  id: Int!
+  title: String
+  done: Boolean!
+}
+
+type UpdateTodoItemDetailPayload {
+  todoItem: TodoItem!
+}
+
+input UpdateTodoItemDetailCommandInput {
+  id: Int!
+  listId: Int!
+  priority: PriorityLevel!
+  note: String
+}
