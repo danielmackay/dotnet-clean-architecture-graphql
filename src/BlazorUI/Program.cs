@@ -17,7 +17,6 @@ builder.Services
     .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7114/graphql/"));
 
 builder.Services.AddSingleton<StorageService>();
-builder.Services.AddSingleton<TodoListState>();
 builder.Services.AddSingleton<AppState>();
 
 builder.Services.AddMudServices();
