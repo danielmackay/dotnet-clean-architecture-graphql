@@ -1,0 +1,7 @@
+mutation DeleteTodoItem($id: Int!){
+  deleteTodoItem(input: {id: $id}) {
+    todoItem {
+      id
+    }
+  }
+}

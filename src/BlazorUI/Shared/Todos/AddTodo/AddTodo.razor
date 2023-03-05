@@ -1,0 +1,35 @@
+﻿@using BlazorUI.Models;
+
+@inject CreateTodoItemMutation CreateTodoItem;
+
+@code {
+    private string TextValue { get; set; } = string.Empty;
+
+    private bool AddDisabled => string.IsNullOrWhiteSpace(TextValue);
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            await Add();
+    }
+
+    private async Task Add()
+    {
+        if (string.IsNullOrWhiteSpace(TextValue))
+            return;
+
+        await CreateTodoItem.ExecuteAsync(TextValue, 1);
+        TextValue = string.Empty;
+    }
+}
+
+<MudForm>
+    <MudGrid>
+        <MudItem sm="10" xs="12">
+            <MudTextField @bind-Value="TextValue" Immediate="true" Label="Add your todo" Variant="Variant.Text" OnKeyDown="OnKeyDown"></MudTextField>
+        </MudItem>
+        <MudItem sm="2" xs="12">
+            <MudButton Class="mt-4" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" Disabled="AddDisabled" OnClick="Add">Add</MudButton>
+        </MudItem>
+    </MudGrid>
+</MudForm>

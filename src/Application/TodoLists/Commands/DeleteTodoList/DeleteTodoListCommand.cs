@@ -8,6 +8,8 @@ namespace CA.GraphQL.Application.TodoLists.Commands.DeleteTodoList;
 
 public record DeleteTodoListCommand(int Id) : IRequest<DeleteTodoListPayload>;
 
+public record DeleteTodoListPayload(TodoList TodoList);
+
 public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand, DeleteTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
@@ -34,4 +36,3 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
     }
 }
 
-public record DeleteTodoListPayload(TodoList TodoList);

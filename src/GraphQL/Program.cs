@@ -1,6 +1,7 @@
 using CA.GraphQL.Infrastructure.Persistence;
 using GraphQL.Filters;
-using GraphQL.Types;
+using GraphQL.Mutations;
+using GraphQL.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,13 +23,13 @@ builder.Services
     .AddFiltering()
     .AddSorting()
     .AddErrorFilter<ValidationFilter>()
-    //.AddMutationConventions()
-    //.SetPagingOptions(new PagingOptions()
-    //{
-    //    MaxPageSize = 50,
-    //    DefaultPageSize = 20,
-    //    IncludeTotalCount = true
-    //})
+//.AddMutationConventions()
+//.SetPagingOptions(new PagingOptions()
+//{
+//    MaxPageSize = 50,
+//    DefaultPageSize = 20,
+//    IncludeTotalCount = true
+//})
 ;
 
 var app = builder.Build();

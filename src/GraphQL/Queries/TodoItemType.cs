@@ -1,6 +1,6 @@
 ﻿using CA.GraphQL.Domain.Entities;
 
-namespace GraphQL.Types;
+namespace GraphQL.Queries;
 
 public class TodoItemType : ObjectType<TodoItem>
 {

@@ -12,6 +12,8 @@ public record UpdateTodoListCommand : IRequest<UpdateTodoListPayload>
     public string? Title { get; init; }
 }
 
+public record UpdateTodoListPayload(TodoList TodoList);
+
 public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand, UpdateTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
@@ -37,4 +39,3 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListComman
     }
 }
 
-public record UpdateTodoListPayload(TodoList TodoList);

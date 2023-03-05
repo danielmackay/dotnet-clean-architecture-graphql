@@ -8,7 +8,7 @@
       "url": "https://localhost:44339/graphql/",
       "records": {
         "inputs": false,
-        "entities": false
+        "entities": true
       },
       "transportProfiles": [
         {

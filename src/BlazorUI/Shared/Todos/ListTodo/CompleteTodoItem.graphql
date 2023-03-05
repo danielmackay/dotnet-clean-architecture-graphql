@@ -1,0 +1,7 @@
+mutation CompleteTodoItem($id: Int!, $done: Boolean!) {
+  completeTodoItem(input: {id: $id, done: $done}) {
+    todoItem {
+      id
+    }
+  }
+}

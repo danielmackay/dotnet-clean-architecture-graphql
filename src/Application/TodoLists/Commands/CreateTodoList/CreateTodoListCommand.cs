@@ -9,6 +9,8 @@ public record CreateTodoListCommand : IRequest<CreateTodoListPayload>
     public string? Title { get; init; }
 }
 
+public record CreateTodoListPayload(TodoList TodoList);
+
 public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, CreateTodoListPayload>
 {
     private readonly IApplicationDbContext _context;
@@ -32,4 +34,3 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
     }
 }
 
-public record CreateTodoListPayload(TodoList TodoList);

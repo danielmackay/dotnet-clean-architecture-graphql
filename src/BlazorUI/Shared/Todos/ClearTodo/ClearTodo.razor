@@ -1,0 +1,10 @@
+﻿@inject PurgeTodoItemsMutation PurgeTodoItems;
+
+@code {
+    private async void Clear()
+    {
+        await PurgeTodoItems.ExecuteAsync(1);
+    }
+}
+
+<MudButton Variant="Variant.Filled" FullWidth="false" Color="Color.Error" Class="mt-10" OnClick="Clear">Clear</MudButton>

@@ -1,0 +1,10 @@
+query GetTodoItem($id: Int!) {
+  todoItem(id: $id) {
+    id
+    listId
+    title
+    note
+    priority
+    done
+  }
+}

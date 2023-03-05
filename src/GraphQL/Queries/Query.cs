@@ -4,7 +4,7 @@ using CA.GraphQL.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraphQL.Types;
+namespace GraphQL.Queries;
 
 public class Query
 {
@@ -13,6 +13,9 @@ public class Query
     [UseFiltering]
     [UseSorting]
     public IQueryable<TodoItem> GetTodoItems([Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.AsNoTracking();
+
+    [UseSingleOrDefault]
+    public IQueryable<TodoItem> GetTodoItem(int id, [Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.Where(ti => ti.Id == id);
 
     [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]

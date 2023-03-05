@@ -32,6 +32,7 @@ type TodoList {
 
 type Query {
   todoItems(skip: Int take: Int where: TodoItemFilterInput order: [TodoItemSortInput!]): TodoItemsCollectionSegment
+  todoItem(id: Int!): TodoItem
   todoLists(skip: Int take: Int where: TodoListFilterInput order: [TodoListSortInput!]): TodoListsCollectionSegment
   weatherForecasts(skip: Int take: Int where: WeatherForecastFilterInput order: [WeatherForecastSortInput!]): WeatherForecastsCollectionSegment
 }
@@ -45,6 +46,8 @@ type Mutation {
   deleteTodoItem(input: DeleteTodoItemCommandInput!): DeleteTodoItemPayload!
   updateTodoItem(input: UpdateTodoItemCommandInput!): UpdateTodoItemPayload!
   updateTodoItemDetail(input: UpdateTodoItemDetailCommandInput!): UpdateTodoItemDetailPayload!
+  completeTodoItem(input: CompleteTodoItemCommandInput!): CompleteTodoItemPayload!
+  purgeTodoItems(input: PurgeTodoItemsCommandInput!): PurgeTodoItemsPayload!
 }
 
 enum PriorityLevel {
@@ -267,10 +270,6 @@ input BaseEventFilterInput {
   or: [BaseEventFilterInput!]
 }
 
-type UpdateTodoListPayload {
-  todoList: TodoList!
-}
-
 type PurgeTodoListsPayload {
   success: Boolean!
 }
@@ -288,6 +287,10 @@ input CreateTodoListCommandInput {
 }
 
 type CreateTodoListPayload {
+  todoList: TodoList!
+}
+
+type UpdateTodoListPayload {
   todoList: TodoList!
 }
 
@@ -332,4 +335,21 @@ input UpdateTodoItemDetailCommandInput {
   listId: Int!
   priority: PriorityLevel!
   note: String
+}
+
+type CompleteTodoItemPayload {
+  todoItem: TodoItem!
+}
+
+input CompleteTodoItemCommandInput {
+  id: Int!
+  done: Boolean!
+}
+
+type PurgeTodoItemsPayload {
+  removed: Int!
+}
+
+input PurgeTodoItemsCommandInput {
+  listId: Int!
 }
