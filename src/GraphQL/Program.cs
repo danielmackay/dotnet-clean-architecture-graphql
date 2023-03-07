@@ -1,7 +1,5 @@
 using CA.GraphQL.Infrastructure.Persistence;
 using GraphQL.Filters;
-using GraphQL.Mutations;
-using GraphQL.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +8,8 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddGraphQLServices();
 builder.Services
     .AddGraphQLServer()
-    //.AddFairyBread()
+    .AddTypes()
     .RegisterDbContext<ApplicationDbContext>()
-    .AddQueryType<Query>()
-    .AddMutationType<Mutation>()
-    //.AddType<MutationType>()
-    .AddType<TodoItemType>()
-    .AddType<TodoListType>()
-    //.AddType<BaseEntityType>()
-    //.AddType<TodoItem>()
     .AddProjections()
     .AddFiltering()
     .AddSorting()
