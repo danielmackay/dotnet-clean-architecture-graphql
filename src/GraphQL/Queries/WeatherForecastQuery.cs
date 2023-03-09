@@ -1,5 +1,5 @@
-﻿using CA.GraphQL.Application.WeatherForecasts.Queries.GetWeatherForecasts;
-using MediatR;
+﻿using CA.GraphQL.Application.Common.Interfaces;
+using CA.GraphQL.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 
 namespace GraphQL.Queries;
 
@@ -10,5 +10,5 @@ public class WeatherForecastQuery
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<WeatherForecast>> GetWeatherForecasts([Service] ISender sender) => await sender.Send(new GetWeatherForecastsQuery());
+    public async Task<IEnumerable<WeatherForecast>> GetWeatherForecasts([Service] IWeatherForecastRepository repository) => await repository.GetAll();
 }

@@ -1,6 +1,5 @@
-﻿using CA.GraphQL.Domain.Entities;
-using CA.GraphQL.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+﻿using CA.GraphQL.Application.Common.Interfaces;
+using CA.GraphQL.Domain.Entities;
 
 namespace GraphQL.Queries;
 
@@ -11,8 +10,8 @@ public class TodoItemQuery
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoItem> GetTodoItems([Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.AsNoTracking();
+    public IQueryable<TodoItem> GetTodoItems([Service(ServiceKind.Synchronized)] ITodoItemRepository repository) => repository.GetAll();
 
     [UseSingleOrDefault]
-    public IQueryable<TodoItem> GetTodoItem(int id, [Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoItems.Where(ti => ti.Id == id);
+    public IQueryable<TodoItem> GetTodoItem(int id, [Service(ServiceKind.Synchronized)] ITodoItemRepository repository) => repository.GetAll(id);
 }
