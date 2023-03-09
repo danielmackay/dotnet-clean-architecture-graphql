@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <GraphQL Remove="shared\todos\listtodo\OnTodoItemCreated.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="GetTodoItems.graphql" />
     <None Remove="Pages\Todos\Details\GetTodoItem.graphql" />
     <None Remove="Shared\Todos\AddTodo\CreateTodoItem.graphql" />

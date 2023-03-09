@@ -5,8 +5,17 @@
 @inject TodoClientStoreAccessor StoreAccessor;
 @inject CompleteTodoItemMutation CompleteTodoItem;
 @inject DeleteTodoItemMutation DeleteTodoItem;
+@inject TodoClient TodoClient;
 
 @code {
+
+    protected override void OnInitialized()
+    {
+        TodoClient.OnTodoItemCreated
+            .Watch()
+            .Subscribe(async result => await _useGetTodoItems.Operation.ExecuteAsync());
+    }
+
     private async void ToggleCompletion(IGetTodoItems_TodoItems_Items todoItem)
     {
         var done = !todoItem.Done;
@@ -36,9 +45,11 @@
     {
         await DeleteTodoItem.ExecuteAsync(todoItem.Id);
     }
+
+    private UseGetTodoItems _useGetTodoItems;
 }
 
-<UseGetTodoItems Context="result">
+<UseGetTodoItems Context="result" @ref="_useGetTodoItems">
     <ChildContent>
         @if (result.TodoItems?.Items?.Count is null or 0)
         {
