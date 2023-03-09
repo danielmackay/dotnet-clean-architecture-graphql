@@ -1,7 +1,7 @@
 ﻿using CA.GraphQL.Application.Common.Behaviours;
+using CA.GraphQL.Application.Common.Interfaces;
+using CA.GraphQL.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 using FluentValidation;
-//using MediatR;
-//using MediatR.Pipeline;
 using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -22,10 +22,8 @@ public static class ConfigureServices
             cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             cfg.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
         });
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+
+        services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
 
         return services;
     }

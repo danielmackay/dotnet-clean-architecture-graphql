@@ -54,5 +54,4 @@ app.UseRouting();
 
 app.MapGraphQL();
 
-
 app.Run();

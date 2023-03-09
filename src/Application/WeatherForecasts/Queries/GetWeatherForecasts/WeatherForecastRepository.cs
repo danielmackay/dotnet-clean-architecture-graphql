@@ -1,17 +1,14 @@
-﻿using MediatR;
+﻿using CA.GraphQL.Application.Common.Interfaces;
 
 namespace CA.GraphQL.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 
-public record GetWeatherForecastsQuery : IRequest<IEnumerable<WeatherForecast>>;
-
-public class GetWeatherForecastsQueryHandler : IRequestHandler<GetWeatherForecastsQuery, IEnumerable<WeatherForecast>>
+public class WeatherForecastRepository : IWeatherForecastRepository
 {
-    private static readonly string[] Summaries = new[]
-    {
+    private static readonly string[] Summaries = new[] {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    public Task<IEnumerable<WeatherForecast>> Handle(GetWeatherForecastsQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<WeatherForecast>> GetAll()
     {
         var rng = new Random();
 

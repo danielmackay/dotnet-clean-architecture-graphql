@@ -3,6 +3,7 @@ using CA.GraphQL.Infrastructure.Files;
 using CA.GraphQL.Infrastructure.Identity;
 using CA.GraphQL.Infrastructure.Persistence;
 using CA.GraphQL.Infrastructure.Persistence.Interceptors;
+using CA.GraphQL.Infrastructure.Persistence.Repositories;
 using CA.GraphQL.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,11 @@ public static class ConfigureServices
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+
+        services.Scan(scan => scan
+            .FromCallingAssembly()
+            .AddClasses(filter => filter.InNamespaceOf<TodoItemRepository>())
+            .AsImplementedInterfaces());
 
         //services.AddAuthentication()
         //    .AddIdentityServerJwt();
