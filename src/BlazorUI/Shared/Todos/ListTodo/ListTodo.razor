@@ -13,7 +13,11 @@
     {
         TodoClient.OnTodoItemCreated
             .Watch()
-            .Subscribe(async result => await _useGetTodoItems.Operation.ExecuteAsync());
+            .Subscribe(async result =>
+            {
+                await _useGetTodoItems.Operation.ExecuteAsync();
+                this.StateHasChanged();
+            });
     }
 
     private async void ToggleCompletion(IGetTodoItems_TodoItems_Items todoItem)

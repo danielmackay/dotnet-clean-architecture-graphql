@@ -13,8 +13,8 @@ builder.Services
 
 builder.Services
     .AddTodoClient(strategy: StrawberryShake.ExecutionStrategy.CacheAndNetwork)
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7114/graphql/"))
-     .ConfigureWebSocketClient(client => client.Uri = new Uri("ws://localhost:5050/graphql"));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7114/graphql"))
+     .ConfigureWebSocketClient(client => client.Uri = new Uri("wss://localhost:7114/graphql"));
 ;
 
 builder.Services.AddMudServices();
