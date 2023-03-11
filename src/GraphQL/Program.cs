@@ -8,6 +8,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddGraphQLServices();
 builder.Services
     .AddGraphQLServer()
+    .AddInMemorySubscriptions()
     .AddTypes()
     .RegisterDbContext<ApplicationDbContext>()
     .AddProjections()
@@ -51,6 +52,8 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseWebSockets();
 
 app.MapGraphQL();
 
