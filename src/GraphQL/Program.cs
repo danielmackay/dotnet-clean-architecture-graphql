@@ -1,42 +1,35 @@
-using CA.GraphQL.Infrastructure.Persistence;
 using GraphQL.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddWebServices();
 
-builder.Services.AddGraphQLServices();
 builder.Services
     .AddGraphQLServer()
     .AddInMemorySubscriptions()
     .AddTypes()
-    // .RegisterDbContext<ApplicationDbContext>()
     .AddProjections()
     .AddFiltering()
     .AddSorting()
     .AddErrorFilter<ValidationFilter>()
-//.AddMutationConventions()
-//.SetPagingOptions(new PagingOptions()
-//{
-//    MaxPageSize = 50,
-//    DefaultPageSize = 20,
-//    IncludeTotalCount = true
-//})
-;
+    .ModifyPagingOptions(options =>
+    {
+        options.IncludeTotalCount = true;
+        options.MaxPageSize = 50;
+        options.DefaultPageSize = 20;
+        options.EnableRelativeCursors = false;
+    })
+    ;
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
-
-    // Initialise and seed database
-    using var scope = app.Services.CreateScope();
-    var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-    await initialiser.InitialiseAsync();
-    await initialiser.SeedAsync();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -51,11 +44,10 @@ app.UseCors(policy => policy
 
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
-
 app.UseRouting();
-
 app.UseWebSockets();
 
 app.MapGraphQL();
+app.MapDefaultEndpoints();
 
 app.Run();

@@ -22,7 +22,4 @@
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Code\Personal\dotnet-clean-architecture-graphql\src\Infrastructure\Persistence\Migrations\.editorconfig" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="C:\Code\Personal\dotnet-clean-architecture-graphql\src\Infrastructure\Persistence\Migrations\.editorconfig" />
-  </ItemGroup>
 </Project>

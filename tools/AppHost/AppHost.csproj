@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsAspireHost>true</IsAspireHost>
+        <UserSecretsId>3999f012-310e-4449-8dc4-19ac5925f9b7</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1"/>
+        <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.3.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\BlazorUI\BlazorUI.csproj" />
+      <ProjectReference Include="..\..\src\GraphQL\GraphQL.csproj" />
+      <ProjectReference Include="..\MigrationService\MigrationService.csproj" />
+    </ItemGroup>
+
+</Project>

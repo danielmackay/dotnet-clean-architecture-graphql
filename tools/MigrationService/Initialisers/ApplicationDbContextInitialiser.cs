@@ -1,10 +1,10 @@
 ﻿using CA.GraphQL.Domain.Entities;
 using CA.GraphQL.Infrastructure.Identity;
+using CA.GraphQL.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
-namespace CA.GraphQL.Infrastructure.Persistence;
+namespace MigrationService.Initialisers;
 
 public class ApplicationDbContextInitialiser
 {
