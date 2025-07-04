@@ -22,7 +22,7 @@ public class ValidationFilter : IErrorFilter
         if (error.Exception is not null and NotFoundException nfEx)
         {
             return error
-                .RemoveExtensions()
+                // .RemoveExtensions()
                 .WithCode(ErrorCode.NotFound.ToString())
                 .WithMessage(nfEx.Message);
         }

@@ -7,9 +7,9 @@ namespace GraphQL.Queries;
 [QueryType]
 public class TodoListQuery
 {
-    [UseOffsetPaging(IncludeTotalCount = true)]
+    [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoList> GetTodoLists([Service(ServiceKind.Synchronized)] ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
+    public IQueryable<TodoList> GetTodoLists([Service]ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
 }

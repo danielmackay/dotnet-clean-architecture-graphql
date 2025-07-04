@@ -16,9 +16,9 @@
     <None Remove="Shared\Todos\DeleteTodoItem.graphql" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="StrawberryShake.Blazor" Version="14.0.0-p.15" />
-    <PackageReference Include="MudBlazor" Version="6.1.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" />
+    <PackageReference Include="StrawberryShake.Blazor" Version="15.1.7" />
+    <PackageReference Include="MudBlazor" Version="8.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.6" />
   </ItemGroup>
 </Project>

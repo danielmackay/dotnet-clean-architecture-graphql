@@ -15,7 +15,7 @@
 
     //public DateTime? DueDate { get; set; }
 
-    public ICollection<object> SelectedValues { get; set; } = new List<object>();
+    public IReadOnlyCollection<object> SelectedValues { get; set; } = new List<object>();
 
     private void Save()
     {
@@ -83,4 +83,3 @@
         Loading ...
     </LoadingContent>
 </UseGetTodoItem>
-
