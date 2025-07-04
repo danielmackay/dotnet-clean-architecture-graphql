@@ -11,7 +11,7 @@ builder.Services
     .AddGraphQLServer()
     .AddInMemorySubscriptions()
     .AddTypes()
-    .RegisterDbContext<ApplicationDbContext>()
+    // .RegisterDbContext<ApplicationDbContext>()
     .AddProjections()
     .AddFiltering()
     .AddSorting()

@@ -5,14 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="14.0.0-p.15" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="14.0.0-p.15" />
-    <PackageReference Include="HotChocolate.Types.Analyzers" Version="14.0.0-p.15" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="AutoMapper" Version="15.0.0" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.7" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="15.1.7" />
+    <PackageReference Include="HotChocolate.Types.Analyzers" Version="15.1.7" />
+    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />

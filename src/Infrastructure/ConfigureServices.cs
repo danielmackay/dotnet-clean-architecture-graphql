@@ -1,5 +1,4 @@
 ﻿using CA.GraphQL.Application.Common.Interfaces;
-using CA.GraphQL.Infrastructure.Files;
 using CA.GraphQL.Infrastructure.Identity;
 using CA.GraphQL.Infrastructure.Persistence;
 using CA.GraphQL.Infrastructure.Persistence.Interceptors;
@@ -43,10 +42,9 @@ public static class ConfigureServices
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
         services.Scan(scan => scan
-            .FromCallingAssembly()
+            .FromEntryAssembly()
             .AddClasses(filter => filter.InNamespaceOf<TodoItemRepository>())
             .AsImplementedInterfaces());
 

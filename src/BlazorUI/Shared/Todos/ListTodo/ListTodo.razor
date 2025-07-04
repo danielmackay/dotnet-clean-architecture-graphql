@@ -25,17 +25,18 @@
         var done = !todoItem.Done;
 
         // Immediately update the store for a better user experience
-        StoreAccessor.EntityStore.Update(session =>
-        {
-            var entityId = new EntityId("TodoItem", todoItem.Id);
-            var entity = session.CurrentSnapshot.GetEntity<TodoItemEntity>(entityId);
-            if (entity is not null)
-            {
-                // TODO: Try to get this to work with record types
-                var newEntity = new TodoItemEntity(todoItem.Id, 1, todoItem.Title, null, PriorityLevel.None, done);
-                session.SetEntity(entityId, newEntity);
-            }
-        });
+        // TODO: Fix
+        // StoreAccessor.EntityStore.Update(session =>
+        // {
+        //     var entityId = new EntityId("TodoItem", todoItem.Id);
+        //     var entity = session.CurrentSnapshot.GetEntity<TodoItemEntity>(entityId);
+        //     if (entity is not null)
+        //     {
+        //         // TODO: Try to get this to work with record types
+        //         var newEntity = new TodoItemEntity(todoItem.Id, 1, todoItem.Title, null, PriorityLevel.None, done);
+        //         session.SetEntity(entityId, newEntity);
+        //     }
+        // });
 
         await CompleteTodoItem.ExecuteAsync(todoItem.Id, done);
     }

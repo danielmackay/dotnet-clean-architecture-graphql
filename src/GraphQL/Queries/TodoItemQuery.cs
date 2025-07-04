@@ -6,12 +6,12 @@ namespace GraphQL.Queries;
 [QueryType]
 public class TodoItemQuery
 {
-    [UseOffsetPaging(IncludeTotalCount = true)]
+    [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoItem> GetTodoItems([Service(ServiceKind.Synchronized)] ITodoItemRepository repository) => repository.GetAll();
+    public IQueryable<TodoItem> GetTodoItems(ITodoItemRepository repository) => repository.GetAll();
 
     [UseSingleOrDefault]
-    public IQueryable<TodoItem> GetTodoItem(int id, [Service(ServiceKind.Synchronized)] ITodoItemRepository repository) => repository.GetAll(id);
+    public IQueryable<TodoItem> GetTodoItem(int id, ITodoItemRepository repository) => repository.GetAll(id);
 }
