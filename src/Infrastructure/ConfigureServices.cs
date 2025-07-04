@@ -1,5 +1,5 @@
 ﻿using CA.GraphQL.Application.Common.Interfaces;
-using CA.GraphQL.Infrastructure.Identity;
+// using CA.GraphQL.Infrastructure.Identity;
 using CA.GraphQL.Infrastructure.Persistence;
 using CA.GraphQL.Infrastructure.Persistence.Interceptors;
 using CA.GraphQL.Infrastructure.Services;
@@ -14,8 +14,6 @@ public static class ConfigureServices
 {
     public static IHostApplicationBuilder AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddScoped<AuditableEntitySaveChangesInterceptor>();
-
         builder.AddSqlServerDbContext<ApplicationDbContext>("graphql-db",
             null,
             options =>
@@ -26,16 +24,17 @@ public static class ConfigureServices
 
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        builder.Services
-            .AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+        // builder.Services
+        //     .AddDefaultIdentity<ApplicationUser>()
+        //     .AddRoles<IdentityRole>()
+        //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        builder.Services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+        // builder.Services.AddIdentityServer()
+        //     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+        builder.Services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         builder.Services.AddTransient<IDateTime, DateTimeService>();
-        builder.Services.AddTransient<IIdentityService, IdentityService>();
+        // builder.Services.AddTransient<IIdentityService, IdentityService>();
 
         // services.Scan(scan => scan
         //     .FromEntryAssembly()

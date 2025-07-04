@@ -10,10 +10,11 @@ public static class ConfigureServices
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
-
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+        services.AddCors();
+
+        services.AddHttpContextAccessor();
 
         return services;
     }

@@ -1,30 +1,23 @@
 ﻿using System.Reflection;
 using CA.GraphQL.Application.Common.Interfaces;
 using CA.GraphQL.Domain.Entities;
-using CA.GraphQL.Infrastructure.Identity;
-using CA.GraphQL.Infrastructure.Persistence.Interceptors;
-using Duende.IdentityServer.EntityFramework.Options;
 using MediatR;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace CA.GraphQL.Infrastructure.Persistence;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IMediator _mediator;
-    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
     public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
-        IOptions<OperationalStoreOptions> operationalStoreOptions,
-        IMediator mediator,
-        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
-        : base(options, operationalStoreOptions)
+        DbContextOptions options,
+        IMediator mediator)
+        : base(options)
     {
         _mediator = mediator;
-        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
 
     public DbSet<TodoList> TodoLists => Set<TodoList>();
@@ -38,11 +31,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         base.OnModelCreating(builder);
     }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
-    // }
-
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);
@@ -50,3 +38,24 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         return await base.SaveChangesAsync(cancellationToken);
     }
 }
+
+// public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+// {
+//     public ApplicationDbContext CreateDbContext(string[] args)
+//     {
+//         // Manually configure the options here
+//         var configuration = new ConfigurationBuilder()
+//             .SetBasePath(Directory.GetCurrentDirectory())
+//             .AddJsonFile("appsettings.json", optional: true)
+//             .Build();
+//
+//         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+//
+//         var connectionString = configuration.GetConnectionString("graphql-db");
+//         optionsBuilder.UseSqlServer(connectionString); // or UseNpgsql, etc.
+//
+//         return new ApplicationDbContext(
+//             optionsBuilder.Options,
+//             mediator: null!);
+//     }
+// }
