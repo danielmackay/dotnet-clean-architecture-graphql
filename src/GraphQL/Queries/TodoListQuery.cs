@@ -11,5 +11,5 @@ public class TodoListQuery
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoList> GetTodoLists(ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
+    public IQueryable<TodoList> GetTodoLists([Service]ApplicationDbContext dbContext) => dbContext.TodoLists.AsNoTracking();
 }

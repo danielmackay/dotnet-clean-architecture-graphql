@@ -1,5 +1,6 @@
 ﻿using CA.GraphQL.Application.Common.Interfaces;
 using CA.GraphQL.Domain.Entities;
+using CA.GraphQL.Infrastructure.Persistence;
 
 namespace GraphQL.Queries;
 
@@ -10,8 +11,9 @@ public class TodoItemQuery
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoItem> GetTodoItems(ITodoItemRepository repository) => repository.GetAll();
+    public IQueryable<TodoItem> GetTodoItems([Service] ApplicationDbContext dbContext) => dbContext.TodoItems;
 
     [UseSingleOrDefault]
-    public IQueryable<TodoItem> GetTodoItem(int id, ITodoItemRepository repository) => repository.GetAll(id);
+    public IQueryable<TodoItem> GetTodoItem(int id, [Service]ApplicationDbContext dbContext) => dbContext.TodoItems
+        .Where(x => x.Id == id);
 }
