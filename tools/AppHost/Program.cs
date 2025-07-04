@@ -7,14 +7,16 @@ var sqlServer = builder
     .WithLifetime(ContainerLifetime.Persistent);
 
 var db = sqlServer
-    .AddDatabase("clean-architecture");
+    .AddDatabase("graphql-db");
 
 var migrationService = builder.AddProject<MigrationService>("migrations")
     .WithReference(db)
     .WaitFor(sqlServer);
 
+// TODO: Add Blazor UI
+
 builder
-    .AddProject<GraphQL>("graphql")
+    .AddProject<GraphQL>("graphql-api")
     .WithEndpoint()
     .WithReference(db)
     .WaitForCompletion(migrationService);

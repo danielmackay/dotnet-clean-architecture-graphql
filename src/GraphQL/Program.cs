@@ -3,8 +3,8 @@ using GraphQL.Filters;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
 
 builder.Services

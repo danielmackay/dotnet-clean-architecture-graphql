@@ -6,39 +6,36 @@ using CA.GraphQL.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IHostApplicationBuilder AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+        builder.Services.AddScoped<AuditableEntitySaveChangesInterceptor>();
 
-        if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-        {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("CA.GraphQLDb"));
-        }
-        else
-        {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-        }
+        builder.AddSqlServerDbContext<ApplicationDbContext>("graphql-db",
+            null,
+            options =>
+            {
+                var serviceProvider = builder.Services.BuildServiceProvider();
+                options.AddInterceptors(serviceProvider.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+            });
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        services
+        builder.Services
             .AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.AddIdentityServer()
+        builder.Services.AddIdentityServer()
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-        services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IIdentityService, IdentityService>();
+        builder.Services.AddTransient<IDateTime, DateTimeService>();
+        builder.Services.AddTransient<IIdentityService, IdentityService>();
 
         // services.Scan(scan => scan
         //     .FromEntryAssembly()
@@ -51,6 +48,6 @@ public static class ConfigureServices
         //services.AddAuthorization(options =>
         //    options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
 
-        return services;
+        return builder;
     }
 }
