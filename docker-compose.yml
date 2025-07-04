@@ -3,20 +3,19 @@
 name: clean-arch-graphql
 
 services:
-  sql:
+  db:
+    container_name: ca-graphql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "yourStrong(!)Password"
-    # mssql server image isn't available for arm64 architecture, so we use azure-sql instead
-    image: mcr.microsoft.com/azure-sql-edge:latest
-    # If you really want to use MS SQL Server, uncomment the following line
-    #image: mcr.microsoft.com/mssql/server
+      - SA_PASSWORD=yourStrong(!)Password
+      - ACCEPT_EULA=Y
     ports:
-      - 1433:1433
-    restart: always
+      - "2400:1433"
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P yourStrong(!)Password -Q 'SELECT 1' || exit 1"]
-      interval: 10s
+      # from: https://github.com/Microsoft/mssql-docker/issues/133
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P yourStrong(!)Password -Q "SELECT 1" -b
+      interval: 30s
+      timeout: 5s
       retries: 10
       start_period: 10s
-      timeout: 3s    
