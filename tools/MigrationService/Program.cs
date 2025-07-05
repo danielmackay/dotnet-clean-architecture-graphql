@@ -26,7 +26,8 @@ builder.AddSqlServerDbContext<ApplicationDbContext>("graphql-db",
     null,
     options =>
     {
-        options.AddInterceptors(builder.Services.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+        var serviceProvider = builder.Services.BuildServiceProvider();
+        options.AddInterceptors(serviceProvider.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
     });
 
 

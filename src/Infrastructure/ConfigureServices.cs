@@ -14,7 +14,8 @@ public static class ConfigureServices
             null,
             options =>
             {
-                options.AddInterceptors(provider => provider.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+                var serviceProvider = builder.Services.BuildServiceProvider();
+                options.AddInterceptors(serviceProvider.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
             });
 
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
