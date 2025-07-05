@@ -12,7 +12,15 @@ public static class ConfigureServices
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-        services.AddCors();
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+        });
 
         services.AddHttpContextAccessor();
 
