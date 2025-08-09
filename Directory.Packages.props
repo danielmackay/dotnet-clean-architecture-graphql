@@ -1,0 +1,63 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Aspire packages -->
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.4.0" />
+    <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.4.0" />
+    <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.4.0" />
+
+    <!-- AutoMapper packages -->
+    <PackageVersion Include="AutoMapper" Version="12.0.1" />
+    <PackageVersion Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+
+    <!-- FluentValidation packages -->
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+
+    <!-- HotChocolate packages -->
+    <PackageVersion Include="HotChocolate.AspNetCore" Version="15.1.8" />
+    <PackageVersion Include="HotChocolate.Data.EntityFramework" Version="15.1.8" />
+    <PackageVersion Include="HotChocolate.Types.Analyzers" Version="15.1.8" />
+
+    <!-- MediatR packages -->
+    <PackageVersion Include="MediatR" Version="13.0.0" />
+
+    <!-- Microsoft AspNetCore packages -->
+    <PackageVersion Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="8.0.0-preview.6.23329.11" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
+
+    <!-- Microsoft EntityFrameworkCore packages -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.6" />
+
+    <!-- Microsoft Extensions packages -->
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.6.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.4.0" />
+
+    <!-- MudBlazor packages -->
+    <PackageVersion Include="MudBlazor" Version="8.9.0" />
+
+    <!-- OpenTelemetry packages -->
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
+
+    <!-- StrawberryShake packages -->
+    <PackageVersion Include="StrawberryShake.Blazor" Version="15.1.8" />
+
+    <!-- Swashbuckle packages -->
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+  </ItemGroup>
+</Project>
