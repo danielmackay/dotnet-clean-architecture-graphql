@@ -12,7 +12,7 @@ public static class ConfigureServices
     {
         var thisAssembly = Assembly.GetExecutingAssembly();
 
-        services.AddAutoMapper(thisAssembly);
+        services.AddAutoMapper(config => { }, thisAssembly);
         services.AddValidatorsFromAssembly(thisAssembly);
         services.AddMediatR(cfg =>
         {
