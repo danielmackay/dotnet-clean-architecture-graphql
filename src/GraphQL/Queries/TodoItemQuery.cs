@@ -1,19 +1,65 @@
 ﻿using CA.GraphQL.Application.Common.Interfaces;
 using CA.GraphQL.Domain.Entities;
 using CA.GraphQL.Infrastructure.Persistence;
+using GreenDonut.Data;
+using HotChocolate.Data.Filters;
+using HotChocolate.Data.Sorting;
+using HotChocolate.Types.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL.Queries;
 
 [QueryType]
-public class TodoItemQuery
+public static class TodoItemQuery
 {
-    [UsePaging(IncludeTotalCount = true)]
-    [UseProjection]
+    public static async Task<TodoItem?> GetTodoItemById(
+        int id,
+        QueryContext<TodoItem> query,
+        ApplicationDbContext dbContext,
+        CancellationToken ct)
+        => await dbContext.TodoItems
+            .With(query)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+    [UsePaging]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<TodoItem> GetTodoItems([Service] ApplicationDbContext dbContext) => dbContext.TodoItems;
+    public static async Task<Connection<TodoItem>> GetTodoItems(
+        PagingArguments pagingArgs,
+        QueryContext<TodoItem> query,
+        ApplicationDbContext dbContext,
+        CancellationToken ct)
+        => await dbContext.TodoItems
+            .OrderBy(ti => ti.Title)
+            .With(query)
+            .AsNoTracking()
+            .ToPageAsync(pagingArgs, ct)
+            .ToConnectionAsync();
+}
 
-    [UseSingleOrDefault]
-    public IQueryable<TodoItem> GetTodoItem(int id, [Service]ApplicationDbContext dbContext) => dbContext.TodoItems
-        .Where(x => x.Id == id);
+/// <summary>
+/// Restricts the fields that can be used for filtering TodoItems
+/// </summary>
+public class TodoItemFilter : FilterInputType<TodoItem>
+{
+    protected override void Configure(IFilterInputTypeDescriptor<TodoItem> descriptor)
+    {
+        descriptor.BindFieldsExplicitly();
+        descriptor.Field(ti => ti.Title);
+        descriptor.Field(ti => ti.Done);
+        descriptor.Field(ti => ti.Id);
+    }
+}
+
+/// <summary>
+/// Restricts the fields that can be used for sorting TodoItems
+/// </summary>
+public class TodoItemSorting : SortInputType<TodoItem>
+{
+    protected override void Configure(ISortInputTypeDescriptor<TodoItem> descriptor)
+    {
+        descriptor.BindFieldsExplicitly();
+        descriptor.Field(ti => ti.Title);
+    }
 }
